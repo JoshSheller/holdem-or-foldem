@@ -6,6 +6,9 @@ ruby '2.0.0'
 # Included to enable all Heroku platform features
 gem 'rails_12factor', group: :production
 
+# gem for postgresql database adapter
+gem 'pg'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use SCSS for stylesheets
