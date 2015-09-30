@@ -7,9 +7,6 @@ var currentUser = null;
 
 var page = "";
 
-$('#result').load('http://fiddle.jshell.net/webdevem/JfcJp/show/');
-$('#partialResult').load('http://fiddle.jshell.net/webdevem/JfcJp/show/ #specialContent');
-
 var firstHoleCard = null;
 var secondHoleCard = null;  
 var hand = null;
@@ -19,7 +16,7 @@ var varianceArray = [];
 
 function randomFunnyImage() {
   var randImage = Math.floor(Math.random() * 11);
-  document.getElementById('funny-image').innerHTML = '<img src="../funny-images/' + randImage + '.jpg" />';
+  document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
 };
 
 function selectNumOpponents() {
@@ -69,8 +66,8 @@ function holeCards() {
     setHandAndSuited();
   };
 
-  document.getElementById('first-hole-card').innerHTML = '<img src="../images/' + firstHoleCard + '.png" />';
-  document.getElementById('second-hole-card').innerHTML = '<img src="../images/' + secondHoleCard + '.png" />';
+  document.getElementById('first-hole-card').innerHTML = '<img src="/assets/' + firstHoleCard + '.png" />';
+  document.getElementById('second-hole-card').innerHTML = '<img src="/assets/' + secondHoleCard + '.png" />';
 };
 
 function addToUserVariance() {
@@ -100,13 +97,13 @@ function logIn() {
     alert("This password does not match this username, please try again :)");
   } else {
     currentUser = username.toString();
-    window.location.assign("../layouts/userHome.html");
+    window.location.assign("/userHome");
   };
 };
 
 function logOut() {
   currentUser = null;
-  window.location.assign("../layouts/index.html");
+  window.location.assign("/index");
 };
 
 function newUser() {
@@ -127,7 +124,7 @@ function newUser() {
 
     alert("Welcome, " + newUsername + ". Let the poker practice begin!");
 
-    // window.location.assign("../layouts/userHome.html");
+    window.location.assign("/userHome");
   };
 };
 

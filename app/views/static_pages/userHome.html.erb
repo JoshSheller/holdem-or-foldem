@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>Holdem Or Foldem</title>
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+
+		<!-- Custom Javascript -->
+		<script type="text/javascript" src="js/script.js"></script>
+
+	</head>
+
+	<body>
+		<div id="banner">
+			<div id="logo-link">
+				<a href="/index">
+					<h1>Holdem Or Foldem</h1>
+				</a>
+			</div>
+			<input id="logout-button" type="submit" value="Log Out" onclick="logOut()">
+		</div>
+
+		<div id="play-half">
+			<h2>Play</h2>
+			<div id="settings">
+			</div>
+			<div id="hole-cards">
+				<div id="first-hole-card">
+					<img src="/assets/faceDown.png" />
+				</div>
+
+				<div id="second-hole-card">
+					<img src="/assets/faceDown.png" />
+				</div>
+
+				<div id="begin-play">
+					<input id="begin-button" type="submit" value="Begin Play!" onclick="beginPlay()">
+				</div>
+
+			</div>
+			<div id="play-options">
+				<table id="">
+					<tr>
+						<td>
+							<p># of Opponents</p>
+						</td>
+						<td>
+							<select id="numOpponentSelector" onchange="selectNumOpponents()">
+  		  						<option value="1">One</option>
+  		 						<option value="2">Two</option>
+  		  						<option value="3">Three</option>
+  		  						<option value="4">Four</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p></p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>You Predicted:</p>
+						</td>
+						<td>
+							<div id="you-predicted"></div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>The Answer:</p>
+						</td>
+						<td>
+							<div id="the-answer"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div id="results-half">
+			<h2>Analyse</h2>
+			<div id="results">
+				<button onclick="handHistories()">Show Hand Histories</button>
+				<div id="hand-histories"></div>
+			</div>
+		</div>
+
+<div id="testing-buttons">
+
+		<a href="/userHome">User Home</a>
+
+		<button onclick="holeCards()">Next Hand</button>
+
+		<button onclick="showHandVariance()">Show Individual Hand Variances</button>
+
+		<button onclick="showTotalVariance()">Show Total Variance</button>
+
+		<button onclick="showUserObject()">Show User Object</button>
+
+		<h2>Sign up for free!</h2>
+				<table id="new-user-form">
+					<tr>
+						<td>
+							<p>New Username</p>
+						</td>
+						<td>
+							<input type="text" id="new-username">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>New Password</p>
+						</td>
+						<td>
+							<input type="text" id="new-password">
+						</td>
+					</tr>
+					<tr id="create-account-table-row">
+						<td id="create-account-button">
+							<input type="submit" value="Create Account" onclick="newUser()">
+						</td>
+					</tr>
+				</table>
+
+		<div id="user-variance">
+		</div>
+
+		<div id="total-user-variance">
+		</div>
+
+		<div id="user-object">
+		</div>
+</div>
+
+	</body>
+
+
+
+
+
+
+	<footer></footer>
+
+</html>

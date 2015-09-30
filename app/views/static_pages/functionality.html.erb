@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>Holdem Or Foldem</title>
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+
+		<!-- Custom Javascript -->
+		<script type="text/javascript" src="js/script.js"></script>
+
+	</head>
+
+
+	<body>
+
+	    <select id="numOpponentSelector" onchange="selectNumOpponents()">
+  		  <option value="1">One</option>
+  		  <option value="2">Two</option>
+  		  <option value="3">Three</option>
+  		  <option value="4">Four</option>
+		</select>
+
+		<a href="/userHome">User Home</a>
+
+		<button onclick="holeCards()">Next Hand</button>
+
+		<button onclick="returnOdds()">Show Odds</button>
+
+		<button onclick="showHandVariance()">Show Variance</button>
+
+		<button onclick="showUserObject()">Show User Object</button>
+
+		<form id="form" onsubmit="return false;">
+			<input type="text" id="user-input">
+			<input type="submit" onclick="addToUserVariance()">
+		</form>
+
+		<form id="form" onsubmit="return false;">
+			<input type="text" id="new-username">
+			<input type="submit" onclick="newUser()">
+		</form>
+
+		<form id="form" onsubmit="return false;">
+			<input type="text" id="new-password">
+		</form>
+
+		<div id="first-hole-card">
+			<img src="/assets/faceDown.png" />
+		</div>
+
+		<div id="second-hole-card">
+			<img src="/assets/faceDown.png" />
+		</div>
+
+		<div id="test-results">
+		</div>
+
+		<div id="user-variance">
+		</div>
+
+		<div id="user-object">
+		</div>
+
+	</body>
+
+
+
+
+
+
+	<footer></footer>
+
+</html>
