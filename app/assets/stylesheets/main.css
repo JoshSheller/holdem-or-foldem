@@ -111,6 +111,10 @@ html, body {
     height: 260px; 
 }
 
+#funny-image-button {
+	padding-left: 40%;
+}
+
 #index-main-right {
 	width: 50%;
 	height: 100%;
