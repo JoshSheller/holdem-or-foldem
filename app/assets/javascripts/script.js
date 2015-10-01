@@ -14,6 +14,18 @@ var suited = null;
 var numOpponents = 1;
 var varianceArray = [];
 
+function showUser() {
+  document.getElementById('index').style.display = "none";
+  document.getElementById('userHome').style.display = "block";
+  document.getElementById('hand-histories').innerHTML = "";
+};
+
+function showIndex() {
+  document.getElementById('userHome').style.display = "none";
+  document.getElementById('index').style.display = "block";
+  randomFunnyImage();
+};
+
 function randomFunnyImage() {
   var randImage = Math.floor(Math.random() * 11);
   document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
@@ -93,17 +105,17 @@ function logIn() {
     alert("Please add your username and re-submit!");
   } else if (userPassword == "") {
     alert("Please add your password and re-submit!");
-  } else if (userPassword.toString() != users[username.toString()][password]) {
+  } else if (userPassword.toString() != users[username.toString()].password) {
     alert("This password does not match this username, please try again :)");
   } else {
     currentUser = username.toString();
-    window.location.assign("/userHome");
+    showUser();
   };
 };
 
 function logOut() {
   currentUser = null;
-  window.location.assign("/index");
+  showIndex();
 };
 
 function newUser() {
@@ -124,7 +136,7 @@ function newUser() {
 
     alert("Welcome, " + newUsername + ". Let the poker practice begin!");
 
-    window.location.assign("/userHome");
+    showUser();
   };
 };
 
