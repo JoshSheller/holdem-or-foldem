@@ -1,18 +1,37 @@
 
+
+/*
+                                        GLOBAL VARIABLES (except oddsArray is at the end of this file)
+*/
+
 var cards = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
 var suits = ["s", "h", "d", "c"];
 
 var users = {};
 var currentUser = null;
 
-var page = "";
-
 var firstHoleCard = null;
-var secondHoleCard = null;  
-var hand = null;
+var secondHoleCard = null;
+
 var suited = null;
+var hand = null;
+
 var numOpponents = 1;
+
 var varianceArray = [];
+
+/*
+                                        PAGE NAVIGATION (sort of)
+
+showUser()
+      displays the userHome content by changing its display style to block
+      hides the index content by changing its display style to none
+      clears the hand-histories results content (in case the user has been changed or so the current user cannot "cheat")
+showIndex()
+      displays the index content by changing its display style to block
+      hides the userHome content by changing its display style to none
+
+*/
 
 function showUser() {
   document.getElementById('index').style.display = "none";
@@ -26,16 +45,104 @@ function showIndex() {
   randomFunnyImage();
 };
 
-function randomFunnyImage() {
-  var randImage = Math.floor(Math.random() * 11);
-  document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
+/*
+                                        USER CREATION / SIGN IN / SIGN OUT
+newUser()
+      the user submitted username is stored in a local variable "newUsername"
+      the user submitted password is stored in a local variable "newPassword"
+      if the submitted username is blank, the user is alerted to try again
+      else if the username already exists, the user is alerted to try again
+      else if the username is not blank and does not already exist the password is tested --> if blank the user is alerted to try again
+      else (username and password are both valid) --> the newUsername is converted to a string and added as an object to the users object
+      the newPassword is converted to a string and stored as a "password" object in the newly created user object
+      the newUsername is converted to a string and stored in the global currentUser variable
+      the user is alerted with a welcome message
+      showUser() is utilized to "change the page" to userHome
+logIn()
+      the user submitted username is stored in a local variable "username"
+      the user submitted password is stored in a local variable "userPassword"
+      if the submitted username is blank the user is alerted to try again
+      else if the password is blank the user is alerted to try again
+      else if the username does not exist in the users object the user is alerted to try again
+      else if the submitted password does not match the password associated with the submitted username object the user is alerted
+      else (username and password match) the submitted username is converted to a string and stored in the global currentUser object
+      showUser() is utilized to "change the page" to userHome
+logOut()
+      the global currentUser variable is set to null
+      showIndex() is utilized to "change the page" to index
+*/
+
+function newUser() {
+  var newUsername = document.getElementById("new-username").value;
+  var newPassword = document.getElementById("new-password").value;
+  if (newUsername == "") {
+    alert("Please add a username and re-submit!");
+  } else if (users[newUsername.toString()] != undefined) {
+    alert(newUsername + " already exists, please try another username :)");
+  } else if (newPassword == "") {
+    alert("Please add a password and re-submit!");
+  } else {
+    users[newUsername.toString()] = {};
+    users[newUsername.toString()].password = newPassword.toString();
+    users[newUsername.toString()].handsPlayed = [];
+
+    currentUser = newUsername.toString();
+
+    alert("Welcome, " + currentUser + ". Let the poker practice begin!");
+
+    showUser();
+  };
 };
 
-function selectNumOpponents() {
-  var selectBox = document.getElementById("numOpponentSelector");
-  var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-  numOpponents = selectedValue; 
+function logIn() {
+  var username = document.getElementById("username").value;
+  var userPassword = document.getElementById("password").value;
+  if (username == "") {
+    alert("Please add your username and re-submit!");
+  } else if (userPassword == "") {
+    alert("Please add your password and re-submit!");
+  } else if (users[username.toString()] == undefined) {
+    alert("This username does not exist, please try again :)");
+  } else if (userPassword.toString() != users[username.toString()].password) {
+    alert("This password does not match this username, please try again :)");
+  } else {
+    currentUser = username.toString();
+    showUser();
+  };
 };
+
+function logOut() {
+  currentUser = null;
+  showIndex();
+};
+
+
+/*
+                                        SELECTING / DISPLAYING A RANDOM POKER HAND
+
+randCardNumber()
+      returns a number representing one of the possible 13 cards (each having 4 suits = 52 in a deck)
+
+randSuit()
+      returns a number representing one of the 4 possible suits (spades/hearts/diamonds/clubs)
+
+randCard()
+      utilizes the two above functions to return a string by combining two values from the global (cards) and (suits) arrays
+
+setHandAndSuited() 
+      creates a string to represent a hand with two face cards and an "o" or "u" representing offsuit or suited
+      this begins by checking if the two cards have the same face value (a pocket pair) in which case the hand is set (pocket pairs are always unsuited)
+      else if the two suits are different a string is created with the first and second cards and "o" for offsuit (and stored in global hand variable)
+      if this string exists in the oddsArray object the hand is set (AKs exists --> however KAs does not)
+      if this string does not exists, the faces are swapped and the hand is set
+      if the two suits were the same, the same testing for the existence of the string in oddsArray and swapping card faces if not is done
+
+holeCards() 
+      utilizes randCard() to choose two random cards for a user hand (firstHoleCard/secondHoleCard)
+      while the two random cards happen to be the same, secondHoleCard is reset as a new random card
+      next setHandAndSuited() is utilized to set the global hand variable
+      finally the two image divs for the hole cards are set to display each of the chosen cards (the images are named AKs etc)
+*/
 
 function randCardNumber() {
   return Math.floor(Math.random() * 13);
@@ -71,15 +178,43 @@ function holeCards() {
   firstHoleCard = randCard();
   secondHoleCard = randCard();
 
-  setHandAndSuited();
-
-  while(secondHoleCard == firstHoleCard) {
+  while(firstHoleCard == secondHoleCard) {
     secondHoleCard = randCard();
-    setHandAndSuited();
   };
+
+  setHandAndSuited();
 
   document.getElementById('first-hole-card').innerHTML = '<img src="/assets/' + firstHoleCard + '.png" />';
   document.getElementById('second-hole-card').innerHTML = '<img src="/assets/' + secondHoleCard + '.png" />';
+};
+
+/*
+                                        USER PLAY
+
+beginPlay() 
+      utilizes holeCards() to set and display the user's hole cards
+      it also adds a user input box for the user to put in their % prediction
+selectNumOpponents()
+      stores the # of opponents selector box location in a local variable "selectBox"
+      sets the global variable "numOpponents" to the user selected value of the above selectBox
+addToUserVariance()
+      receives and stores user % prediction in a local variable currentPrediction
+      next both the user % prediction and actual % are displayed to the user
+      if the handsPlayed array within the currentUser object within the users object does not contain any previous submissions
+            for the current hand and number of opponents an array is created and the user submission is stored within it
+      else the user % prediction is pushed to the existing hand and number of opponent array
+      finally in either case, the % submission box is removed and replaced with a next hand button option
+*/
+
+function beginPlay() {
+  holeCards();
+
+  document.getElementById('begin-play').innerHTML = '<p>Submit Your % Prediction</p><form id="form" onsubmit="return false;"><input type="text" id="current-prediction"><input id="prediction-submit" type="submit" onclick="addToUserVariance()"></form>';
+};
+
+function selectNumOpponents() {
+  var selectBox = document.getElementById("numOpponentSelector");
+  numOpponents = selectBox.options[selectBox.selectedIndex].value;
 };
 
 function addToUserVariance() {
@@ -98,67 +233,38 @@ function addToUserVariance() {
   };
 };
 
-function logIn() {
-  var username = document.getElementById("username").value;
-  var userPassword = document.getElementById("password").value;
-  if (username == "") {
-    alert("Please add your username and re-submit!");
-  } else if (userPassword == "") {
-    alert("Please add your password and re-submit!");
-  } else if (userPassword.toString() != users[username.toString()].password) {
-    alert("This password does not match this username, please try again :)");
-  } else {
-    currentUser = username.toString();
-    showUser();
-  };
-};
+/*
+                                        USER ANALYSIS
 
-function logOut() {
-  currentUser = null;
-  showIndex();
-};
+handHistories()
+      creates a local "output" variable
+      for each hand played by the user, the hand name followed by all previous user % submissions is added to the output variable
+      the output variable is displayed in the Analyse section of the userHome "page"
+showHandVariance()
 
-function newUser() {
-  var newUsername = document.getElementById("new-username").value;
-  var newPassword = document.getElementById("new-password").value;
-  if (newUsername == "") {
-    alert("Please add a username and re-submit!");
-  } else if (users[newUsername.toString()] != undefined) {
-    alert(newUsername + " already exists, please try another username :)");
-  } else if (newPassword == "") {
-    alert("Please add a password and re-submit!");
-  } else {
-    users[newUsername.toString()] = {};
-    users[newUsername.toString()].password = newPassword.toString();
-    currentUser = newUsername.toString();
+*/
 
-    users[newUsername.toString()].handsPlayed = [];
-
-    alert("Welcome, " + newUsername + ". Let the poker practice begin!");
-
-    showUser();
-  };
-};
-
-function contains(a, obj) {
-  for (var i = 0; i < a.length; i++) {
-    if (a[i] === obj) {
-      return true;
-    };
-  };
-  return false;
-};
-
-function showHandVariance() {
-  document.getElementById('user-variance').innerHTML = '<p>' + users[currentUser][hand + numOpponents] + '</p>';
-};
- 
-function showUserObject() {
+function handHistories() {
   var output = '';
-  for (var property in users[currentUser]) {
-    output += property + ': ' + users[currentUser][property]+'; ';
+
+  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
+    output += users[currentUser].handsPlayed[i] + ' : ' + users[currentUser][(users[currentUser].handsPlayed[i])] + "<br><br>";
   };
-  alert(output);
+
+  document.getElementById('hand-histories').innerHTML = '<p>' + output + '</p>';
+};
+
+/*
+                                        @JAS FIX UP AND UTILIZE BELOW
+*/
+
+function randomFunnyImage() {
+  var randImage = Math.floor(Math.random() * 10);
+  document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
+};
+
+function singleHandHistory() {
+  document.getElementById('user-variance').innerHTML = '<p>' + users[currentUser][hand + numOpponents] + '</p>';
 };
 
 function showTotalVariance() {
@@ -171,20 +277,30 @@ function showTotalVariance() {
   document.getElementById('total-user-variance').innerHTML = '<p>' + totalVariance / users[currentUser][hand + numOpponents].length + '</p>';
 };
 
-function handHistories() {
-  var output = '';
-
-  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
-    output += users[currentUser].handsPlayed[i] + ' : ' + users[currentUser][(users[currentUser].handsPlayed[i])] + "<br><br>";
+function contains(a, obj) {
+  for (var i = 0; i < a.length; i++) {
+    if (a[i] === obj) {
+      return true;
+    };
   };
-
-  document.getElementById('hand-histories').innerHTML = '<p>' + output + '</p>';
+  return false;
 };
 
-function beginPlay() {
-  document.getElementById('begin-play').innerHTML = '<p>Submit Your % Prediction</p><form id="form" onsubmit="return false;"><input type="text" id="current-prediction"><input id="prediction-submit" type="submit" onclick="addToUserVariance()"></form>';
+/*
+                                        DEV FUNCTIONS
 
-  holeCards();
+showUserObject()
+      creates a local variable "output"
+      adds each property of the current user object to output
+      displays output
+*/
+
+function showUserObject() {
+  var output = '';
+  for (var property in users[currentUser]) {
+    output += property + ': ' + users[currentUser][property]+'; ';
+  };
+  alert(output);
 };
 
 

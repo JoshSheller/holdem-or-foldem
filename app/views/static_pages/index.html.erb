@@ -13,179 +13,173 @@
 		<script type="text/javascript">
 			window.onload = randomFunnyImage();
 		</script>
+
 	</head>
 
 	<body onload="randomFunnyImage()">
 
-	<button type="button" onclick="showUser()">Show User</button>
-	<button type="button" onclick="showIndex()">Show Index</button>
-	<button onclick="showUserObject()">Show User Object</button>
+		<button type="button" onclick="showUser()">Show User</button>
+		<button type="button" onclick="showIndex()">Show Index</button>
+		<button onclick="showUserObjects()">Show User Object</button>
 
-	<div id="index">
-		<div id="banner">
-			<div id="logo-link-index" onclick="showIndex()">
-				<a href="#">
-					<h1>Holdem Or Foldem</h1>
-				</a>
-			</div>
-			<table id="login-form">
-				<tr>
-					<td>
-						<p>Username</p>
-					</td>
-					<td>
-						<p>Password</p>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="text" id="username">
-					</td>
-					<td>
-						<input type="text" id="password">
-					</td>
-					<td>
-						<input type="submit" value="Log In" onclick="logIn()">
-					</td>
-				</tr>
-			</table>
-		</div>
 <!--
-		<button onclick="showUserObject()">Show User Object</button>
+			INDEX
+	USER CREATION / LOG IN
 -->
-		<div id="index-main">
-			<div id="index-main-left">
-				<h2>Quiz yourself on the odds of starting holdem hands!</h2>
-				<h3>Practice a few quick hands with no account needed or create a new user and log some stats!</h3>
-				<h3>Learn how much odds can change depending on the number of opponents you have!</h3>
-				<h3>Your history can be stored and analyzed to help you find your strongest and weakest perceptions!</h3>
-			</div>
 
-			<div id="index-main-right">
-				<h2>Sign up for free!</h2>
-			<div id="new-user-form">
-				<table>
+		<div id="index">
+
+			<div id="banner">
+				<div id="index-logo-link" onclick="showIndex()">
+					<a href="#">
+						<h1>Holdem Or Foldem</h1>
+					</a>
+				</div>
+				<table id="login-form">
 					<tr>
 						<td>
-							<p>New Username</p>
+							<p>Username</p>
 						</td>
 						<td>
-							<input type="text" id="new-username">
+							<p>Password</p>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<p>New Password</p>
+							<input type="text" id="username">
 						</td>
 						<td>
-							<input type="text" id="new-password">
+							<input type="text" id="password">
 						</td>
-					</tr>
-					<tr id="create-account-table-row">
-						<td id="create-account-button">
-							<input type="submit" value="Create Account" onclick="newUser()">
+						<td>
+							<input type="submit" value="Log In" onclick="logIn()">
 						</td>
 					</tr>
 				</table>
 			</div>
-				<div id="funny-image">
-				</div>
-				<div id="funny-image-button">
-					<input type="submit" value="More Funny Now!" onclick="randomFunnyImage()">
-				</div>
-			</div>
 
-		</div>
-	</div>
-
-	<div id="userHome">
-
-		<div id="banner">
-			<div id="logo-link-user" onclick="showIndex()">
-				<a href="#">
-					<h1>Holdem Or Foldem</h1>
-				</a>
-			</div>
-			<input id="logout-button" type="submit" value="Log Out" onclick="logOut()">
-		</div>
-
-	<div id="play-analyse">
-		<div id="play-half">
-			<h2>Play</h2>
-			<div id="hole-cards">
-				<div id="first-hole-card">
-					<img src="/assets/faceDown.png" />
+			<div id="index-main">
+				<div id="index-main-left">
+					<h2>Quiz yourself on the odds of starting holdem hands!</h2>
+					<h3>Practice a few quick hands with no account needed or create a new user and log some stats!</h3>
+					<h3>Learn how much odds can change depending on the number of opponents you have!</h3>
+					<h3>Your history can be stored and analyzed to help you find your strongest and weakest perceptions!</h3>
 				</div>
 
-				<div id="second-hole-card">
-					<img src="/assets/faceDown.png" />
+				<div id="index-main-right">
+					<h2>Sign up for free!</h2>
+					<div id="new-user-form">
+						<table>
+							<tr>
+								<td>
+									<p>New Username</p>
+								</td>
+								<td>
+									<input type="text" id="new-username">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>New Password</p>
+								</td>
+								<td>
+									<input type="text" id="new-password">
+								</td>
+							</tr>
+							<tr id="create-account-table-row">
+								<td id="create-account-button">
+									<input type="submit" value="Create Account" onclick="newUser()">
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="funny-image">
+					</div>
+					<div id="funny-image-button">
+						<input type="submit" value="More Funny Now!" onclick="randomFunnyImage()">
+					</div>
 				</div>
 
-				<div id="begin-play">
-					<input id="begin-button" type="submit" value="Begin Play!" onclick="beginPlay()">
-				</div>
-
-			</div>
-			<div id="play-options">
-				<table id="">
-					<tr>
-						<td>
-							<p># of Opponents</p>
-						</td>
-						<td>
-							<select id="numOpponentSelector" onchange="selectNumOpponents()">
-  		  						<option value="1">One</option>
-  		 						<option value="2">Two</option>
-  		  						<option value="3">Three</option>
-  		  						<option value="4">Four</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p></p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p>You Predicted:</p>
-						</td>
-						<td>
-							<div id="you-predicted"></div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p>The Answer:</p>
-						</td>
-						<td>
-							<div id="the-answer"></div>
-						</td>
-					</tr>
-				</table>
 			</div>
 		</div>
 
-		<div id="results-half">
-			<h2>Analyse</h2>
-			<div id="results">
-				<button onclick="handHistories()">Show Hand Histories</button>
-				<div id="hand-histories"></div>
+<!--
+		 	USER HOME
+	USER PLAY / ANALYSE / LOG OUT
+-->
+		<div id="userHome">
+
+			<div id="banner">
+				<div id="user-logo-link" onclick="showIndex()">
+					<a href="#">
+						<h1>Holdem Or Foldem</h1>
+					</a>
+				</div>
+				<input id="logout-button" type="submit" value="Log Out" onclick="logOut()">
 			</div>
+
+			<div id="play-analyse">
+				<div id="play-half">
+					<h2>Play</h2>
+					<div id="hole-cards">
+						<div id="first-hole-card">
+							<img src="/assets/faceDown.png" />
+						</div>
+						<div id="second-hole-card">
+							<img src="/assets/faceDown.png" />
+						</div>
+						<div id="begin-play">
+							<input id="begin-button" type="submit" value="Begin Play!" onclick="beginPlay()">
+						</div>
+					</div>
+					<div id="play-options">
+						<table id="">
+							<tr>
+								<td>
+									<p># of Opponents</p>
+								</td>
+								<td>
+									<select id="numOpponentSelector" onchange="selectNumOpponents()">
+  			  							<option value="1">One</option>
+  			 							<option value="2">Two</option>
+  			  							<option value="3">Three</option>
+  			  							<option value="4">Four</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>You Predicted:</p>
+								</td>
+								<td>
+									<div id="you-predicted"></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>The Answer:</p>
+								</td>
+								<td>
+									<div id="the-answer"></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<div id="results-half">
+					<h2>Analyse</h2>
+					<div id="results">
+						<button onclick="handHistories()">Show Hand Histories</button>
+						<div id="hand-histories"></div>
+					</div>
+				</div>
+
+			</div>
+
 		</div>
-	</div>
-
-
-
-	</div>
-
 
 	</body>
-
-
-
-
-
 
 	<footer></footer>
 

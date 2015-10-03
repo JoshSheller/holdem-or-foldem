@@ -3,28 +3,6 @@ html, body {
     height: 100%;
 }
 
-#userHome {
-	display: none;
-	height: 100%;
-}
-
-#index {
-	height: 100%;
-}
-
-#play-analyse {
-	height: 88%;
-	width: 100%;
-}
-
-#logo-link-index a {
-	text-decoration: none;
-}
-
-#logo-link-user a {
-	text-decoration: none;
-}
-
 #banner {
 	width: 100%;
 	height: 12%;
@@ -32,25 +10,26 @@ html, body {
 	border-bottom: 2px solid #133783;
 }
 
-#logo-link-index {
+/*
+			INDEX
+	USER CREATION / LOG IN
+*/
+
+#index {
+	height: 100%;
+}
+
+#index-logo-link {
 	padding-left: 14%;
 	height: 100%;
 	float: left;
 }
 
-#logo-link-index h1 {
-	font-size: 41px;
-	color: whitesmoke;
-	margin-top: 8%;
+#index-logo-link a {
+	text-decoration: none;
 }
 
-#logo-link-user {
-	padding-left: 14%;
-	height: 100%;
-	float: left;
-}
-
-#logo-link-user h1 {
+#index-logo-link h1 {
 	font-size: 41px;
 	color: whitesmoke;
 	margin-top: 8%;
@@ -59,11 +38,6 @@ html, body {
 #login-form {
 	padding-right: 14%;
 	float: right;
-}
-
-#new-user-form {
-	width: 290px;
-	padding-left: 28.6%;
 }
 
 #login-form p {
@@ -98,6 +72,31 @@ html, body {
 	line-height: 133%;
 }
 
+#index-main-right {
+	width: 50%;
+	height: 100%;
+	float: right;
+}
+
+#index-main-right h2 {
+	padding-top: 10%;
+	padding-left: 35%;
+}
+
+#index-main-right table {
+	width: 290px;
+}
+
+#new-user-form {
+	width: 290px;
+	padding-left: 28.6%;
+}
+
+#create-account-table-row {
+	float: right;
+	width: 0px;
+}
+
 #funny-image {
 	padding-left: 26%;
 }
@@ -115,24 +114,61 @@ html, body {
 	padding-left: 40%;
 }
 
-#index-main-right {
+/*
+		 	USER HOME
+	USER PLAY / ANALYSE / LOG OUT
+*/
+
+#userHome {
+	display: none;
+	height: 100%;
+}
+
+#user-logo-link {
+	padding-left: 14%;
+	height: 100%;
+	float: left;
+}
+
+#user-logo-link a {
+	text-decoration: none;
+}
+
+#user-logo-link h1 {
+	font-size: 41px;
+	color: whitesmoke;
+	margin-top: 8%;
+}
+
+#logout-button {
+	margin-right: 20%;
+	margin-top: 35px;
+	float: right;
+}
+
+#play-analyse {
+	height: 88%;
+	width: 100%;
+}
+
+#play-half {
 	width: 50%;
 	height: 100%;
-	float: right;
+	float:left;
+	background-color: lightblue;
 }
 
-#index-main-right h2 {
-	padding-top: 10%;
-	padding-left: 35%;
+#play-half h2 {
+	font-size: 25px;
+	color: black;
+	text-align: center;
 }
 
-#index-main-right table {
-	width: 290px;
-}
-
-#create-account-table-row {
-	float: right;
-	width: 0px;
+#hole-cards {
+	padding-left: 10%;
+	float: left;
+	width: 200px;
+	height: 150px;
 }
 
 #first-hole-card {
@@ -148,23 +184,12 @@ html, body {
 	padding-bottom: 10px;
 }
 
-#hole-cards {
-	padding-left: 10%;
-	float: left;
-	width: 200px;
-	height: 150px;
+#begin-button {
+	margin-left: 49px;
 }
 
-#user-variance {
-	width: 100px;
-	height: 100px;
-}
-
-#play-half {
-	width: 50%;
-	height: 100%;
-	float:left;
-	background-color: lightblue;
+#prediction-submit {
+	margin-left: 5px;
 }
 
 #results-half {
@@ -174,33 +199,10 @@ html, body {
 	background-color: lightcoral;
 }
 
-#play-half h2 {
-	font-size: 25px;
-	color: black;
-	text-align: center;
-}
-
 #results-half h2 {
 	font-size: 25px;
 	color: black;
 	text-align: center;
 }
 
-#logout-button {
-	margin-right: 20%;
-	margin-top: 35px;
-	float: right;
-}
 
-#percent-prediction {
-	width: 100px;
-	margin-left: 6px;
-}
-
-#prediction-submit {
-	margin-left: 5px;
-}
-
-#begin-button {
-	margin-left: 49px;
-}
