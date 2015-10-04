@@ -12,13 +12,12 @@ var currentUser = null;
 
 var firstHoleCard = null;
 var secondHoleCard = null;
-
 var suited = null;
 var hand = null;
 
 var numOpponents = 1;
 
-var varianceArray = [];
+
 
 /*
                                         PAGE NAVIGATION (sort of)
@@ -69,6 +68,7 @@ logIn()
       showUser() is utilized to "change the page" to userHome
 logOut()
       the global currentUser variable is set to null
+      the "begin-play" div is reset to its original state
       showIndex() is utilized to "change the page" to index
 */
 
@@ -113,6 +113,11 @@ function logIn() {
 
 function logOut() {
   currentUser = null;
+
+  document.getElementById('begin-play').innerHTML = '<input id="begin-button" type="submit" value="Begin Play!" onclick="beginPlay()">';
+  document.getElementById('first-hole-card').innerHTML = '<img src="/assets/faceDown.png" />';
+  document.getElementById('second-hole-card').innerHTML = '<img src="/assets/faceDown.png" />';
+
   showIndex();
 };
 
@@ -199,9 +204,10 @@ selectNumOpponents()
       sets the global variable "numOpponents" to the user selected value of the above selectBox
 addToUserVariance()
       receives and stores user % prediction in a local variable currentPrediction
+      if the user prediction is not a number the user is alerted to enter a valid prediction
       next both the user % prediction and actual % are displayed to the user
-      if the handsPlayed array within the currentUser object within the users object does not contain any previous submissions
-            for the current hand and number of opponents an array is created and the user submission is stored within it
+      if the handsPlayed array does not contain any previous submissions for the current hand and number of opponents an array
+            is created and the user submission is stored within it
       else the user % prediction is pushed to the existing hand and number of opponent array
       finally in either case, the % submission box is removed and replaced with a next hand button option
 */
@@ -219,17 +225,21 @@ function selectNumOpponents() {
 
 function addToUserVariance() {
   var currentPrediction = document.getElementById("current-prediction").value;
-
-  document.getElementById('you-predicted').innerHTML = '<p>' + currentPrediction + '%</p>';
-  document.getElementById('the-answer').innerHTML = '<p>' + oddsArray[hand][numOpponents - 1] + '%</p>';
-
-  if (users[currentUser][hand + numOpponents] != undefined) {
-    users[currentUser][hand + numOpponents].push(currentPrediction);
-    document.getElementById('begin-play').innerHTML = '<button onclick="beginPlay()">Next Hand</button>';
+  if (isNaN(currentPrediction)) {
+    alert("This is not a valid number, please enter a number as your prediction :)");
   } else {
-    users[currentUser][hand + numOpponents] = [currentPrediction];
-    users[currentUser].handsPlayed.push(hand + numOpponents);
-    document.getElementById('begin-play').innerHTML = '<button onclick="beginPlay()">Next Hand</button>';
+
+    document.getElementById('you-predicted').innerHTML = '<p>' + currentPrediction + '%</p>';
+    document.getElementById('the-answer').innerHTML = '<p>' + oddsArray[hand][numOpponents - 1] + '%</p>';
+
+    if (users[currentUser][hand + numOpponents] != undefined) {
+      users[currentUser][hand + numOpponents].push(currentPrediction);
+      document.getElementById('begin-play').innerHTML = '<button onclick="beginPlay()">Next Hand</button>';
+    } else {
+      users[currentUser][hand + numOpponents] = [currentPrediction];
+      users[currentUser].handsPlayed.push(hand + numOpponents);
+      document.getElementById('begin-play').innerHTML = '<button onclick="beginPlay()">Next Hand</button>';
+    };
   };
 };
 
@@ -253,6 +263,7 @@ function handHistories() {
 
   document.getElementById('hand-histories').innerHTML = '<p>' + output + '</p>';
 };
+
 
 /*
                                         @JAS FIX UP AND UTILIZE BELOW
@@ -295,7 +306,7 @@ showUserObject()
       displays output
 */
 
-function showUserObject() {
+function showCurrentUserObject() {
   var output = '';
   for (var property in users[currentUser]) {
     output += property + ': ' + users[currentUser][property]+'; ';
@@ -303,7 +314,13 @@ function showUserObject() {
   alert(output);
 };
 
+/*
+                                        BUGS TO FIX
 
+      after logging so many hands the height of the userHome page is stretched beyond styling
+
+
+*/
 
 var oddsArray =
   {
