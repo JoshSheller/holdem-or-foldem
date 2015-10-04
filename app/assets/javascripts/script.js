@@ -22,23 +22,23 @@ var numOpponents = 1;
 /*
                                         PAGE NAVIGATION (sort of)
 
-showUser()
+showUserContent()
       displays the userHome content by changing its display style to block
       hides the index content by changing its display style to none
       clears the hand-histories results content (in case the user has been changed or so the current user cannot "cheat")
-showIndex()
+showIndexContent()
       displays the index content by changing its display style to block
       hides the userHome content by changing its display style to none
 
 */
 
-function showUser() {
+function showUserContent() {
   document.getElementById('index').style.display = "none";
   document.getElementById('userHome').style.display = "block";
-  document.getElementById('hand-histories').innerHTML = "";
+  document.getElementById('hand-histories').innerHTML = '';
 };
 
-function showIndex() {
+function showIndexContent() {
   document.getElementById('userHome').style.display = "none";
   document.getElementById('index').style.display = "block";
   randomFunnyImage();
@@ -56,7 +56,7 @@ newUser()
       the newPassword is converted to a string and stored as a "password" object in the newly created user object
       the newUsername is converted to a string and stored in the global currentUser variable
       the user is alerted with a welcome message
-      showUser() is utilized to "change the page" to userHome
+      showUserContent() is utilized to "change the page" to userHome
 logIn()
       the user submitted username is stored in a local variable "username"
       the user submitted password is stored in a local variable "userPassword"
@@ -65,21 +65,21 @@ logIn()
       else if the username does not exist in the users object the user is alerted to try again
       else if the submitted password does not match the password associated with the submitted username object the user is alerted
       else (username and password match) the submitted username is converted to a string and stored in the global currentUser object
-      showUser() is utilized to "change the page" to userHome
+      showUserContent() is utilized to "change the page" to userHome
 logOut()
       the global currentUser variable is set to null
       the "begin-play" div is reset to its original state
-      showIndex() is utilized to "change the page" to index
+      showIndexContent() is utilized to "change the page" to index
 */
 
 function newUser() {
   var newUsername = document.getElementById("new-username").value;
   var newPassword = document.getElementById("new-password").value;
-  if (newUsername == "") {
+  if (newUsername == '') {
     alert("Please add a username and re-submit!");
   } else if (users[newUsername.toString()] != undefined) {
     alert(newUsername + " already exists, please try another username :)");
-  } else if (newPassword == "") {
+  } else if (newPassword == '') {
     alert("Please add a password and re-submit!");
   } else {
     users[newUsername.toString()] = {};
@@ -90,16 +90,16 @@ function newUser() {
 
     alert("Welcome, " + currentUser + ". Let the poker practice begin!");
 
-    showUser();
+    showUserContent();
   };
 };
 
 function logIn() {
   var username = document.getElementById("username").value;
   var userPassword = document.getElementById("password").value;
-  if (username == "") {
+  if (username == '') {
     alert("Please add your username and re-submit!");
-  } else if (userPassword == "") {
+  } else if (userPassword == '') {
     alert("Please add your password and re-submit!");
   } else if (users[username.toString()] == undefined) {
     alert("This username does not exist, please try again :)");
@@ -107,7 +107,7 @@ function logIn() {
     alert("This password does not match this username, please try again :)");
   } else {
     currentUser = username.toString();
-    showUser();
+    showUserContent();
   };
 };
 
@@ -118,7 +118,7 @@ function logOut() {
   document.getElementById('first-hole-card').innerHTML = '<img src="/assets/faceDown.png" />';
   document.getElementById('second-hole-card').innerHTML = '<img src="/assets/faceDown.png" />';
 
-  showIndex();
+  showIndexContent();
 };
 
 
@@ -136,11 +136,14 @@ randCard()
 
 setHandAndSuited() 
       creates a string to represent a hand with two face cards and an "o" or "u" representing offsuit or suited
-      this begins by checking if the two cards have the same face value (a pocket pair) in which case the hand is set (pocket pairs are always unsuited)
-      else if the two suits are different a string is created with the first and second cards and "o" for offsuit (and stored in global hand variable)
+      this begins by checking if the two cards have the same face value (a pocket pair) in which case the hand 
+        is set (pocket pairs are always unsuited)
+      else if the two suits are different a string is created with the first and second cards and "o" for offsuit 
+        (and stored in global hand variable)
       if this string exists in the oddsArray object the hand is set (AKs exists --> however KAs does not)
       if this string does not exists, the faces are swapped and the hand is set
-      if the two suits were the same, the same testing for the existence of the string in oddsArray and swapping card faces if not is done
+      if the two suits were the same, the same testing for the existence of the string in oddsArray and swapping 
+        card faces if not is done
 
 holeCards() 
       utilizes randCard() to choose two random cards for a user hand (firstHoleCard/secondHoleCard)
@@ -215,7 +218,7 @@ addToUserVariance()
 function beginPlay() {
   holeCards();
 
-  document.getElementById('begin-play').innerHTML = '<p>Submit Your % Prediction</p><form id="form" onsubmit="return false;"><input type="text" id="current-prediction"><input id="prediction-submit" type="submit" onclick="addToUserVariance()"></form>';
+  document.getElementById('begin-play').innerHTML = '<p>Submit Your % Prediction</p><input type="text" id="current-prediction"><input id="prediction-submit" type="submit" onclick="addToUserVariance()"></form>';
 };
 
 function selectNumOpponents() {
@@ -228,7 +231,6 @@ function addToUserVariance() {
   if (isNaN(currentPrediction)) {
     alert("This is not a valid number, please enter a number as your prediction :)");
   } else {
-
     document.getElementById('you-predicted').innerHTML = '<p>' + currentPrediction + '%</p>';
     document.getElementById('the-answer').innerHTML = '<p>' + oddsArray[hand][numOpponents - 1] + '%</p>';
 
@@ -250,8 +252,15 @@ handHistories()
       creates a local "output" variable
       for each hand played by the user, the hand name followed by all previous user % submissions is added to the output variable
       the output variable is displayed in the Analyse section of the userHome "page"
-showHandVariance()
-
+singleHandVariance()
+      user submitted hand is stored in a local "hand" variable
+      user submitted # opponents is stored in a local "numOpponents" variable
+      a local totalVariance variable is declared
+      a local handVariance variable is declared
+      for each entry by the user for the given hand & # opponents, the absolute value of the difference between their % prediction
+        and the actual % is added to totalVariance
+      handVariance is set to equal the totalVariance divided by the number of entries for this hand
+      handVariance is displayed in the Analyses section within the 'show-single-hand-variance' div
 */
 
 function handHistories() {
@@ -264,6 +273,45 @@ function handHistories() {
   document.getElementById('hand-histories').innerHTML = '<p>' + output + '</p>';
 };
 
+function singleHandVariance() {
+  var hand = document.getElementById('single-hand-variance').value;
+  var numOpponents = document.getElementById('single-hand-opponents').value;
+  var totalVariance = 0;
+  var handVariance = 0;
+
+  for (var i = 0; i < (users[currentUser][hand + numOpponents]).length; i++) {
+     totalVariance += Math.abs((users[currentUser][hand + numOpponents][i]) - oddsArray[hand][numOpponents - 1]);
+   };
+
+   handVariance = totalVariance / users[currentUser][hand + numOpponents].length;
+   document.getElementById('show-single-hand-variance').innerHTML = '<p>' + handVariance + '</p>';
+};
+
+function allHandVariances() {
+  var output = '';
+
+  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
+    var totalVariance = 0;
+    var currentHandString = '';
+    var numOpponents = 0;
+
+    if ((users[currentUser].handsPlayed[i]).length == 3) {
+      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1);
+      numOpponents = (users[currentUser].handsPlayed[i]).charAt(2);
+    } else {
+      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1) + (users[currentUser].handsPlayed[i]).charAt(2);
+      numOpponents = (users[currentUser].handsPlayed[i]).charAt(3);
+    };
+    for (var j = 0; j < (users[currentUser][(users[currentUser].handsPlayed[i])]).length; j++) {
+      totalVariance += Math.abs(users[currentUser][(users[currentUser].handsPlayed[i])][j] - oddsArray[currentHandString][numOpponents - 1]);
+    };
+    output += users[currentUser].handsPlayed[i] + ' : ' + totalVariance / users[currentUser][(users[currentUser].handsPlayed[i])].length + "<br><br>";
+  };
+
+  document.getElementById('hand-variances').innerHTML = '<p>' + output + '</p>';
+};
+
+
 
 /*
                                         @JAS FIX UP AND UTILIZE BELOW
@@ -274,10 +322,6 @@ function randomFunnyImage() {
   document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
 };
 
-function singleHandHistory() {
-  document.getElementById('user-variance').innerHTML = '<p>' + users[currentUser][hand + numOpponents] + '</p>';
-};
-
 function showTotalVariance() {
   var totalVariance = 0;
 
@@ -285,7 +329,7 @@ function showTotalVariance() {
     totalVariance += Math.abs((users[currentUser][hand + numOpponents][i]) - oddsArray[hand][numOpponents - 1]);
   };
   
-  document.getElementById('total-user-variance').innerHTML = '<p>' + totalVariance / users[currentUser][hand + numOpponents].length + '</p>';
+  document.getElementById('show-single-hand-variance').innerHTML = '<p>' + totalVariance / users[currentUser][hand + numOpponents].length + '</p>';
 };
 
 function contains(a, obj) {
@@ -300,7 +344,7 @@ function contains(a, obj) {
 /*
                                         DEV FUNCTIONS
 
-showUserObject()
+showCurrentUserObject()
       creates a local variable "output"
       adds each property of the current user object to output
       displays output
@@ -315,11 +359,33 @@ function showCurrentUserObject() {
 };
 
 /*
-                                        BUGS TO FIX
+                                        BUGS TO FIX / ADDONS TO FINISH
 
-      after logging so many hands the height of the userHome page is stretched beyond styling
+      !!! easy fix!!! after logging so many hands the height of the userHome page is stretched beyond styling
 
+      add responses to user depending on how close their prediction was?
 
+      add simpler game version which gives user %'s to choose from instead of asking for specific % prediction
+
+      call functions with arguments and use return values more instead of pulling values from 
+        document.getElementById('').value
+
+      when user looks up their individual hand variance would be nice to have an error if they entered a string that is not a hand
+        also should add the same option to select 1/2/3/4 opponents as in the Play section
+          ALSO need to add a message if the user enters a correct hand but has no logged play with said hand
+
+      could rewrite pocket pairs with "o" for offsuit to keep everything consistent / simplify a few functions / reduce confusion
+      for user when typing hand in for results
+
+      figure out how to use arguments and return values more efficiently with html page
+        ex. singleHandVariance should be utilized within allHandsVariance instead of re-written
+
+      add alert to handHistories() when user has no hand histories (not that important)
+
+      improve hand naming conventions and app etc better / give a ? option to see this information only if needed by user
+
+      CLEAN UP allHandVariances() --> it is such a horrible unreadable mess!?
+          don't forget to add comment to explain this mess
 */
 
 var oddsArray =

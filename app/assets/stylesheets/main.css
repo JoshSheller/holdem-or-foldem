@@ -205,4 +205,24 @@ html, body {
 	text-align: center;
 }
 
+#results-half-left {
+	width: 50%;
+	float:left;
+}
+
+#hand-histories-half {
+	width: 50%;
+	float:left;
+}
+
+#all-variances-half {
+	width: 50%;
+	float:left;
+}
+
+#results-half-right {
+	width: 50%;
+	float:left;
+}
+
 

@@ -18,10 +18,9 @@
 
 	<body onload="randomFunnyImage()">
 
-		<button type="button" onclick="showUser()">Show User</button>
-		<button type="button" onclick="showIndex()">Show Index</button>
+		<button type="button" onclick="showUserContent()">Show User</button>
+		<button type="button" onclick="showIndexContent()">Show Index</button>
 		<button onclick="showCurrentUserObject()">Show User Object</button>
-		<button onclick="showAllUserObjects()">Show All User Objects</button>
 
 <!--
 												INDEX
@@ -31,7 +30,7 @@
 		<div id="index">
 
 			<div id="banner">
-				<div id="index-logo-link" onclick="showIndex()">
+				<div id="index-logo-link" onclick="showIndexContent()">
 					<a href="#">
 						<h1>Holdem Or Foldem</h1>
 					</a>
@@ -111,7 +110,7 @@
 		<div id="userHome">
 
 			<div id="banner">
-				<div id="user-logo-link" onclick="showIndex()">
+				<div id="user-logo-link" onclick="showIndexContent()">
 					<a href="#">
 						<h1>Holdem Or Foldem</h1>
 					</a>
@@ -170,9 +169,30 @@
 
 				<div id="results-half">
 					<h2>Analyse</h2>
-					<div id="results">
-						<button onclick="handHistories()">Show Hand Histories</button>
-						<div id="hand-histories"></div>
+					<p>This program understands hands in the form of "hand" + "suited or unsuited".</p>
+					<p>For example AKs would be Ace King suited, however the higher value card must always come first.</p>
+					<p>KAs does not exist in the database as this would create duplicates.<p>
+					<p>Finally, pocket pairs do not include a suit (as they are always unsuited).<p>
+					<p>For example, JJ, not JJo.<p>
+					<p>Cards are named as follows:<p>
+					<p>2, 3, 4, 5, 6, 7, 8, 9, T, J, Q, K, A<p>
+					<div id="results-half-left">
+						<div id="hand-histories-half">
+							<button onclick="handHistories()">Show Hand Histories</button>
+							<div id="hand-histories"></div>
+						</div>
+						<div id="all-variances-half">
+							<button onclick="allHandVariances()">Show Hand Variances</button>
+							<div id="hand-variances"></div>
+						</div>
+					</div>
+					<div id="results-half-right">
+						<p>Enter a hand</p>
+						<input type="text" id="single-hand-variance">
+						<p>Enter number of opponents</p>
+						<input type="text" id="single-hand-opponents">
+						<button onclick="singleHandVariance()">Show Single Hand Variance</button>
+						<div id="show-single-hand-variance"></div>
 					</div>
 				</div>
 
