@@ -17,6 +17,8 @@ var hand = null;
 
 var numOpponents = 1;
 
+var previousFunnyImage = '';
+
 
 
 /*
@@ -31,8 +33,10 @@ showIndexContent()
       hides the userHome content by changing its display style to none
 randomFunnyImage()
       a local randImage variable is declared containing a random number between 0-9
-      this number is used within an img src tag to display a random funny image in the 'funny-image' div
-        (the image names are 0 through 10 .jpg)
+      if this random number is the same as the global variable 'previousFunnyImage', start randomFunnyImage() over
+      else set previousFunnyImage to equal the new randImage value and use this number to display a random funny image with
+        an img src tag in the 'funny-image' div
+          (the image names are 0 through 10 .jpg)
 
 
 */
@@ -51,7 +55,13 @@ function showIndexContent() {
 
 function randomFunnyImage() {
   var randImage = Math.floor(Math.random() * 10);
-  document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
+
+  if (randImage == previousFunnyImage) {
+    randomFunnyImage();
+  } else {
+    previousFunnyImage = randImage;
+    document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
+  };
 };
 
 /*
