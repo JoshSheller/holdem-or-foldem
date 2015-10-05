@@ -53,7 +53,7 @@ html, body {
 #index-main-left {
 	width: 50%;
 	height: 100%;
-	float:left;
+	float: left;
 }
 
 #index-main-left h2 {
@@ -195,7 +195,7 @@ html, body {
 #results-half {
 	width: 50%;
 	height: 100%;
-	float:left;
+	float: left;
 	background-color: lightcoral;
 }
 
@@ -205,24 +205,22 @@ html, body {
 	text-align: center;
 }
 
-#results-half-left {
-	width: 50%;
-	float:left;
+#hand-histories-third {
+	width: 30%;
+	float: left;
+	text-align: center;
 }
 
-#hand-histories-half {
-	width: 50%;
-	float:left;
+#all-hand-variances-third {
+	width: 30%;
+	float: left;
+	text-align: center;
 }
 
-#all-variances-half {
-	width: 50%;
-	float:left;
-}
-
-#results-half-right {
-	width: 50%;
-	float:left;
+#all-hand-variance-ranges-third {
+	width: 30%;
+	float: left;
+	text-align: center;
 }
 
 

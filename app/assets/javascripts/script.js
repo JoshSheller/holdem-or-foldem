@@ -29,6 +29,11 @@ showUserContent()
 showIndexContent()
       displays the index content by changing its display style to block
       hides the userHome content by changing its display style to none
+randomFunnyImage()
+      a local randImage variable is declared containing a random number between 0-9
+      this number is used within an img src tag to display a random funny image in the 'funny-image' div
+        (the image names are 0 through 10 .jpg)
+
 
 */
 
@@ -42,6 +47,11 @@ function showIndexContent() {
   document.getElementById('userHome').style.display = "none";
   document.getElementById('index').style.display = "block";
   randomFunnyImage();
+};
+
+function randomFunnyImage() {
+  var randImage = Math.floor(Math.random() * 10);
+  document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
 };
 
 /*
@@ -228,7 +238,9 @@ function selectNumOpponents() {
 
 function addToUserVariance() {
   var currentPrediction = document.getElementById("current-prediction").value;
-  if (isNaN(currentPrediction)) {
+  if (currentPrediction < 0 || currentPrediction > 100) {
+    alert("Your percent prediction is out of the possible range, please enter a number between 0 - 100");
+  } else if (isNaN(currentPrediction)) {
     alert("This is not a valid number, please enter a number as your prediction :)");
   } else {
     document.getElementById('you-predicted').innerHTML = '<p>' + currentPrediction + '%</p>';
@@ -252,7 +264,7 @@ handHistories()
       creates a local "output" variable
       for each hand played by the user, the hand name followed by all previous user % submissions is added to the output variable
       the output variable is displayed in the Analyse section of the userHome "page"
-singleHandVariance()
+singleHandVariance() --> (not in use)
       user submitted hand is stored in a local "hand" variable
       user submitted # opponents is stored in a local "numOpponents" variable
       a local totalVariance variable is declared
@@ -260,7 +272,42 @@ singleHandVariance()
       for each entry by the user for the given hand & # opponents, the absolute value of the difference between their % prediction
         and the actual % is added to totalVariance
       handVariance is set to equal the totalVariance divided by the number of entries for this hand
-      handVariance is displayed in the Analyses section within the 'show-single-hand-variance' div
+      handVariance is displayed in the Analyses section within the 'show-single-hand-variance' divs
+allHandVariances()
+      declares an empty local variable 'output'
+      for each hand played by the user, three local variables are declared (totalVariance/currentHandString/numOpponents)
+      if the card entry is 3 letters in length (a pocket pair without a suited or unsuited letter)
+        store the first two letters (the card) in the currentHandString variable
+        store the third letter (number of opponents) in the numOpponents variable
+      else (the card is not a pocket pair and has four letters)
+        store the first three letters (the card and suited or unsuited) in the currentHandString variable
+        store the fourth letter (number of opponents) in the numOpponents variable
+      (nested) for each entry in the current hand, add the absolute value of the difference between the user entry
+        and the actual %
+      the totalVariance for current hand is divided by the number of user entries for said hand to give 
+        hand variance are added to 'output'
+      output is displayed in the 'hand-variances' div
+      
+handVarianceRange()
+      an 'output' variable is declared with an <h2> of the given lowerLimit and upperLimit arguments as a range
+      for each hand played by the user, three local empty variables are declared (totalVariance/currentHandString/numOpponents)
+      if the card entry is 3 letters in length (a pocket pair without a suited or unsuited letter)
+        store the first two letters (the card) in the currentHandString variable
+        store the third letter (number of opponents) in the numOpponents variable
+      else (the card is not a pocket pair and has four letters)
+        store the first three letters (the card and suited or unsuited) in the currentHandString variable
+        store the fourth letter (number of opponents) in the numOpponents variable
+      (nested) for each entry in the current hand, add the absolute value of the difference between the user entry
+        and the actual %
+      the totalVariance for current hand is divided by the number of user entries for said hand and stored in currentHandVariance
+      if the currentHandVariance value is between the given lowerLimit/upperLimit arguments the card name and currentHandVariance
+        are added to 'output'
+      output is returned
+
+allHandVarianceRanges()
+      an empty 'output' variable is declared
+      utlizes handVarianceRange() to add cards with variances within desired ranges to local 'output' variable
+      displays 'output' in 'all-hand-variance-ranges' div
 */
 
 function handHistories() {
@@ -273,6 +320,7 @@ function handHistories() {
   document.getElementById('hand-histories').innerHTML = '<p>' + output + '</p>';
 };
 
+/* not in use */
 function singleHandVariance() {
   var hand = document.getElementById('single-hand-variance').value;
   var numOpponents = document.getElementById('single-hand-opponents').value;
@@ -311,16 +359,63 @@ function allHandVariances() {
   document.getElementById('hand-variances').innerHTML = '<p>' + output + '</p>';
 };
 
+function handVarianceRange(lowerLimit, upperLimit) {
+  var output = '<h2>' + lowerLimit + '-' + upperLimit + '</h2>';
+
+  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
+    var totalVariance = 0;
+    var currentHandString = '';
+    var numOpponents = 0;
+
+    if ((users[currentUser].handsPlayed[i]).length == 3) {
+      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1);
+      numOpponents = (users[currentUser].handsPlayed[i]).charAt(2);
+    } else {
+      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1) + (users[currentUser].handsPlayed[i]).charAt(2);
+      numOpponents = (users[currentUser].handsPlayed[i]).charAt(3);
+    };
+    for (var j = 0; j < (users[currentUser][(users[currentUser].handsPlayed[i])]).length; j++) {
+      totalVariance += Math.abs(users[currentUser][(users[currentUser].handsPlayed[i])][j] - oddsArray[currentHandString][numOpponents - 1]);
+    };
+    var currentHandVariance = totalVariance / users[currentUser][(users[currentUser].handsPlayed[i])].length;
+    if (lowerLimit <= currentHandVariance && currentHandVariance <= upperLimit) {
+      output += users[currentUser].handsPlayed[i] + ' : ' + currentHandVariance + "<br><br>";
+    };
+  };
+  return output;
+};
+
+function allHandVarianceRanges() {
+  var output = '';
+
+  output += handVarianceRange(0, 10);
+
+  output += handVarianceRange(10, 20);
+
+  output += handVarianceRange(20, 30);
+
+  output += handVarianceRange(30, 40);
+
+  output += handVarianceRange(40, 50);
+
+  output += handVarianceRange(50, 60);
+
+  output += handVarianceRange(60, 70);
+
+  output += handVarianceRange(70, 80);
+
+  output += handVarianceRange(80, 90);
+
+  output += handVarianceRange(90, 100);
+
+  document.getElementById('all-hand-variance-ranges').innerHTML = '<p>' + output + '</p>';
+};
+
 
 
 /*
                                         @JAS FIX UP AND UTILIZE BELOW
 */
-
-function randomFunnyImage() {
-  var randImage = Math.floor(Math.random() * 10);
-  document.getElementById('funny-image').innerHTML = '<img src="/assets/' + randImage + '.jpg" />';
-};
 
 function showTotalVariance() {
   var totalVariance = 0;
@@ -386,6 +481,8 @@ function showCurrentUserObject() {
 
       CLEAN UP allHandVariances() --> it is such a horrible unreadable mess!?
           don't forget to add comment to explain this mess
+
+      ability for user to clear hand histories or specific hand history
 */
 
 var oddsArray =

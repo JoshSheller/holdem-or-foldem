@@ -169,31 +169,25 @@
 
 				<div id="results-half">
 					<h2>Analyse</h2>
-					<p>This program understands hands in the form of "hand" + "suited or unsuited".</p>
-					<p>For example AKs would be Ace King suited, however the higher value card must always come first.</p>
-					<p>KAs does not exist in the database as this would create duplicates.<p>
-					<p>Finally, pocket pairs do not include a suit (as they are always unsuited).<p>
-					<p>For example, JJ, not JJo.<p>
-					<p>Cards are named as follows:<p>
-					<p>2, 3, 4, 5, 6, 7, 8, 9, T, J, Q, K, A<p>
-					<div id="results-half-left">
-						<div id="hand-histories-half">
-							<button onclick="handHistories()">Show Hand Histories</button>
-							<div id="hand-histories"></div>
-						</div>
-						<div id="all-variances-half">
-							<button onclick="allHandVariances()">Show Hand Variances</button>
-							<div id="hand-variances"></div>
-						</div>
+					<p>This program understands hands in the form of "hand" + "suited or unsuited" + "number of opponents".</p>
+					<p>&nbsp &nbsp &nbsp &nbsp For example AKs2 would be Ace King suited with two opponents.</p>
+					<p>Pocket pairs do not include "suited or unsuited" (as they are always unsuited).</p>
+					<p>&nbsp &nbsp &nbsp &nbsp For example, JJ3, not JJo3.</p>
+					<p>Cards are named as follows: &nbsp 2, 3, 4, 5, 6, 7, 8, 9, T, J, Q, K, A</p>
+
+					<div id="hand-histories-third">
+						<button onclick="handHistories()">Show Hand Histories</button>
+						<div id="hand-histories"></div>
 					</div>
-					<div id="results-half-right">
-						<p>Enter a hand</p>
-						<input type="text" id="single-hand-variance">
-						<p>Enter number of opponents</p>
-						<input type="text" id="single-hand-opponents">
-						<button onclick="singleHandVariance()">Show Single Hand Variance</button>
-						<div id="show-single-hand-variance"></div>
+					<div id="all-hand-variances-third">
+						<button onclick="allHandVariances()">Show Hand Variances</button>
+						<div id="hand-variances"></div>
 					</div>
+					<div id="all-hand-variance-ranges-third">
+						<button onclick="allHandVarianceRanges()">Show Hand Variance Ranges</button>
+						<div id="all-hand-variance-ranges"></div>
+					</div>
+
 				</div>
 
 			</div>
