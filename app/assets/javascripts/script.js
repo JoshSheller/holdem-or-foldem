@@ -263,7 +263,7 @@ function addToUserVariance() {
 handHistories()
       creates a local "output" variable
       for each hand played by the user, the hand name followed by all previous user % submissions is added to the output variable
-      the output variable is displayed in the Analyse section of the userHome "page"
+      the output variable is displayed in the Analysis section of the userHome "page"
 singleHandVariance() --> (not in use)
       user submitted hand is stored in a local "hand" variable
       user submitted # opponents is stored in a local "numOpponents" variable
@@ -272,7 +272,7 @@ singleHandVariance() --> (not in use)
       for each entry by the user for the given hand & # opponents, the absolute value of the difference between their % prediction
         and the actual % is added to totalVariance
       handVariance is set to equal the totalVariance divided by the number of entries for this hand
-      handVariance is displayed in the Analyses section within the 'show-single-hand-variance' divs
+      handVariance is displayed in the Analysis section within the 'show-single-hand-variance' divs
 allHandVariances()
       declares an empty local variable 'output'
       for each hand played by the user, three local variables are declared (totalVariance/currentHandString/numOpponents)
@@ -456,7 +456,6 @@ function showCurrentUserObject() {
 /*
                                         BUGS TO FIX / ADDONS TO FINISH
 
-      !!! easy fix!!! after logging so many hands the height of the userHome page is stretched beyond styling
 
       add responses to user depending on how close their prediction was?
 
@@ -465,15 +464,8 @@ function showCurrentUserObject() {
       call functions with arguments and use return values more instead of pulling values from 
         document.getElementById('').value
 
-      when user looks up their individual hand variance would be nice to have an error if they entered a string that is not a hand
-        also should add the same option to select 1/2/3/4 opponents as in the Play section
-          ALSO need to add a message if the user enters a correct hand but has no logged play with said hand
-
       could rewrite pocket pairs with "o" for offsuit to keep everything consistent / simplify a few functions / reduce confusion
       for user when typing hand in for results
-
-      figure out how to use arguments and return values more efficiently with html page
-        ex. singleHandVariance should be utilized within allHandsVariance instead of re-written
 
       add alert to handHistories() when user has no hand histories (not that important)
 

@@ -116,7 +116,7 @@ html, body {
 
 /*
 		 	USER HOME
-	USER PLAY / ANALYSE / LOG OUT
+	USER PLAY / ANALYSIS / LOG OUT
 */
 
 #userHome {
@@ -146,7 +146,7 @@ html, body {
 	float: right;
 }
 
-#play-analyse {
+#play-analysis {
 	width: 100%;
 	overflow: hidden;
 }
@@ -208,6 +208,10 @@ html, body {
 	text-align: center;
 }
 
+#analysis-guidance {
+	padding-left: 3.5%;
+}
+
 #hand-histories-third {
 	width: 30%;
 	float: left;
@@ -224,6 +228,10 @@ html, body {
 	width: 30%;
 	float: left;
 	text-align: center;
+}
+
+#all-hand-variance-ranges-third h2 {
+	font-size: 21px;
 }
 
 
