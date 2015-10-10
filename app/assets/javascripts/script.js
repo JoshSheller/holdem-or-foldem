@@ -19,16 +19,6 @@ var numOpponents = 1;
 
 var previousFunnyImage = '';
 
-var scores = [84, 99, 91, 65, 87, 55, 72, 68, 95, 42];
-var topScorers = [];
-var scoreLimit = 90;
-
-function testUnderscore() {
-  topScorers = _.select(scores, function(score){ return score > scoreLimit;});
-  
-  alert(topScorers);
-};
-
 /*
                                         PAGE NAVIGATION (sort of)
 
