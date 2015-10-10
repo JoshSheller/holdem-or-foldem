@@ -30,7 +30,7 @@ showIndexContent()
       displays the index content by changing its display style to block
       hides the userHome content by changing its display style to none
 randomFunnyImage()
-      a local randImage variable is declared containing a random number between 0-9
+      a local randImage variable is declared containing a random number between 0-9 (using _.random())
       if this random number is the same as the global variable 'previousFunnyImage', start randomFunnyImage() over
       else set previousFunnyImage to equal the new randImage value and use this number to display a random funny image with
         an img src tag in the 'funny-image' div
@@ -50,7 +50,7 @@ function showIndexContent() {
 };
 
 function randomFunnyImage() {
-  var randImage = Math.floor(Math.random() * 10);
+  var randImage = _.random(0, 9);
 
   if (randImage == previousFunnyImage) {
     randomFunnyImage();
