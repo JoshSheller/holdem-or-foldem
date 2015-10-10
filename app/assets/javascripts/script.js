@@ -330,7 +330,6 @@ function allHandVariances() {
   var output = '';
 
   _.each(users[currentUser].handsPlayed, function(hand) {
-    var totalVariance = 0;
     var currentHandString = '';
     var numOpponents = 0;
 
@@ -342,11 +341,12 @@ function allHandVariances() {
       numOpponents = hand.charAt(3);
     };
 
-    _.each(users[currentUser][hand], function(prediction) {
-      totalVariance += Math.abs(prediction - oddsArray[currentHandString][numOpponents - 1]);
-    });
+    var totalVariance = _.reduce(users[currentUser][hand], function(sum, prediction) {
+      return sum + Math.abs(prediction - oddsArray[currentHandString][numOpponents - 1]);
+    }, 0);
 
     output += hand + ' : ' + totalVariance / users[currentUser][hand].length + '<br><br>';
+
   });
   document.getElementById('hand-variances').innerHTML = '<p>' + output + '</p>';
 };
@@ -355,7 +355,6 @@ function handVarianceRange(lowerLimit, upperLimit) {
   var output = '<h2>' + lowerLimit + '-' + upperLimit + '</h2>';
 
   _.each(users[currentUser].handsPlayed, function(hand) {
-    var totalVariance = 0;
     var currentHandString = '';
     var numOpponents = 0;
 
@@ -367,14 +366,15 @@ function handVarianceRange(lowerLimit, upperLimit) {
       numOpponents = hand.charAt(3);
     };
 
-    _.each(users[currentUser][hand], function(prediction) {
-      totalVariance += Math.abs(prediction - oddsArray[currentHandString][numOpponents - 1]);
-    });
+    var totalVariance = _.reduce(users[currentUser][hand], function(sum, prediction) {
+      return sum + Math.abs(prediction - oddsArray[currentHandString][numOpponents - 1]);
+    }, 0);
 
     var currentHandVariance = totalVariance / users[currentUser][hand].length;
     if (lowerLimit <= currentHandVariance && currentHandVariance <= upperLimit) {
       output += hand + ' : ' + currentHandVariance + "<br><br>";
     };
+
   });
   return output;
 };
@@ -453,29 +453,27 @@ function showCurrentUserObject() {
                                         BUGS TO FIX / ADDONS TO FINISH
 
 
-      add hand vs hand odds for user to bring in a more real world skill / also asking for a specific % is a bit intimidating
-          (player reads the opponent, based on read can determine odds)
-              currently the odds are based on the opponent having any random hand so would probably only be useful if in
-              an end game scenario where opponent has no option (blinds etc) and has to push all in
-
-      add responses to user depending on how close their prediction was?
+      add hand vs hand odds for user to bring in a more real world skill
+        currently the odds are based on the opponent having any random hand so would probably only be useful if in
+        an end game scenario where opponent has no option (blinds etc) and has to push all in
 
       add simpler game version which gives user %'s to choose from instead of asking for specific % prediction
+        asking for a specific % is a bit intimidating
 
-      call functions with arguments and use return values more instead of pulling values from 
-        document.getElementById('').value
+      add responses to user depending on how close their prediction was?
 
       could rewrite pocket pairs with "o" for offsuit to keep everything consistent / simplify a few functions / reduce confusion
       for user when typing hand in for results
 
-      add alert to handHistories() when user has no hand histories (not that important)
-
-      improve hand naming conventions and app etc better / give a ? option to see this information only if needed by user
-
-      CLEAN UP allHandVariances() --> it is such a horrible unreadable mess!?
-          don't forget to add comment to explain this mess
+      improve / explain hand naming conventions better
 
       ability for user to clear hand histories or specific hand history
+
+      CLEAN UP allHandVariances() --> it is such a horrible unreadable mess!?
+        don't forget to add comment to explain this mess
+
+      possibly divide hand variance ranges entirely so never a duplicate
+        ex. an average 10% error on a hand with show up in 0-10 & 10-20
 */
 
 var oddsArray =
