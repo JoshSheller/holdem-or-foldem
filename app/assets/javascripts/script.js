@@ -141,14 +141,10 @@ function logOut() {
 /*
                                         SELECTING / DISPLAYING A RANDOM POKER HAND
 
-randCardNumber()
-      returns a number representing one of the possible 13 cards (each having 4 suits = 52 in a deck)
-
-randSuit()
-      returns a number representing one of the 4 possible suits (spades/hearts/diamonds/clubs)
-
 randCard()
-      utilizes the two above functions to return a string by combining two values from the global (cards) and (suits) arrays
+      utilizing the underscore "_.random" function, combines two values from the global (cards) and (suits) arrays to form a
+      string representing a specific card
+        one of 13 cards, one of four suits
 
 setHandAndSuited() 
       creates a string to represent a hand with two face cards and an "o" or "u" representing offsuit or suited
@@ -168,16 +164,8 @@ holeCards()
       finally the two image divs for the hole cards are set to display each of the chosen cards (the images are named AKs etc)
 */
 
-function randCardNumber() {
-  return Math.floor(Math.random() * 13);
-};
-
-function randSuit() {
-  return Math.floor(Math.random() * 4);
-};
-
 function randCard() {
-  return cards[randCardNumber()] + (suits[randSuit()]);
+  return cards[_.random(0, 12)] + (suits[_.random(0, 3)]);
 };
 
 function setHandAndSuited() {
@@ -462,6 +450,11 @@ function showCurrentUserObject() {
 /*
                                         BUGS TO FIX / ADDONS TO FINISH
 
+
+      add hand vs hand odds for user to bring in a more real world skill / also asking for a specific % is a bit intimidating
+          (player reads the opponent, based on read can determine odds)
+              currently the odds are based on the opponent having any random hand so would probably only be useful if in
+              an end game scenario where opponent has no option (blinds etc) and has to push all in
 
       add responses to user depending on how close their prediction was?
 
