@@ -307,9 +307,9 @@ allHandVarianceRanges()
 function handHistories() {
   var output = '';
 
-  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
-    output += users[currentUser].handsPlayed[i] + ' : ' + users[currentUser][(users[currentUser].handsPlayed[i])] + "<br><br>";
-  };
+  _.each(users[currentUser].handsPlayed, function(hand) {
+    output += hand + ' : ' + users[currentUser][hand] + "<br><br>";
+  });
 
   document.getElementById('hand-histories').innerHTML = '<p>' + output + '</p>';
 };
@@ -321,61 +321,61 @@ function singleHandVariance() {
   var totalVariance = 0;
   var handVariance = 0;
 
-  for (var i = 0; i < (users[currentUser][hand + numOpponents]).length; i++) {
-     totalVariance += Math.abs((users[currentUser][hand + numOpponents][i]) - oddsArray[hand][numOpponents - 1]);
-   };
-
-   handVariance = totalVariance / users[currentUser][hand + numOpponents].length;
-   document.getElementById('show-single-hand-variance').innerHTML = '<p>' + handVariance + '</p>';
+  _.each(users[currentUser][hand + numOpponents], function(prediction) {
+    totalVariance += Math.abs(prediction - oddsArray[hand][numOpponents - 1]);
+  });
 };
 
 function allHandVariances() {
   var output = '';
 
-  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
+  _.each(users[currentUser].handsPlayed, function(hand) {
     var totalVariance = 0;
     var currentHandString = '';
     var numOpponents = 0;
 
-    if ((users[currentUser].handsPlayed[i]).length == 3) {
-      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1);
-      numOpponents = (users[currentUser].handsPlayed[i]).charAt(2);
+    if (hand.length == 3) {
+      currentHandString = hand.charAt(0) + hand.charAt(1);
+      numOpponents = hand.charAt(2);
     } else {
-      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1) + (users[currentUser].handsPlayed[i]).charAt(2);
-      numOpponents = (users[currentUser].handsPlayed[i]).charAt(3);
+      currentHandString = hand.charAt(0) + hand.charAt(1) + hand.charAt(2);
+      numOpponents = hand.charAt(3);
     };
-    for (var j = 0; j < (users[currentUser][(users[currentUser].handsPlayed[i])]).length; j++) {
-      totalVariance += Math.abs(users[currentUser][(users[currentUser].handsPlayed[i])][j] - oddsArray[currentHandString][numOpponents - 1]);
-    };
-    output += users[currentUser].handsPlayed[i] + ' : ' + totalVariance / users[currentUser][(users[currentUser].handsPlayed[i])].length + "<br><br>";
-  };
 
+    _.each(users[currentUser][hand], function(prediction) {
+      totalVariance += Math.abs(prediction - oddsArray[currentHandString][numOpponents - 1]);
+    });
+
+    output += hand + ' : ' + totalVariance / users[currentUser][hand].length + '<br><br>';
+  });
   document.getElementById('hand-variances').innerHTML = '<p>' + output + '</p>';
 };
 
 function handVarianceRange(lowerLimit, upperLimit) {
   var output = '<h2>' + lowerLimit + '-' + upperLimit + '</h2>';
 
-  for (var i = 0; i < users[currentUser].handsPlayed.length; i++) {
+  _.each(users[currentUser].handsPlayed, function(hand) {
     var totalVariance = 0;
     var currentHandString = '';
     var numOpponents = 0;
 
-    if ((users[currentUser].handsPlayed[i]).length == 3) {
-      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1);
-      numOpponents = (users[currentUser].handsPlayed[i]).charAt(2);
+    if (hand.length == 3) {
+      currentHandString = hand.charAt(0) + hand.charAt(1);
+      numOpponents = hand.charAt(2);
     } else {
-      currentHandString = (users[currentUser].handsPlayed[i]).charAt(0) + (users[currentUser].handsPlayed[i]).charAt(1) + (users[currentUser].handsPlayed[i]).charAt(2);
-      numOpponents = (users[currentUser].handsPlayed[i]).charAt(3);
+      currentHandString = hand.charAt(0) + hand.charAt(1) + hand.charAt(2);
+      numOpponents = hand.charAt(3);
     };
-    for (var j = 0; j < (users[currentUser][(users[currentUser].handsPlayed[i])]).length; j++) {
-      totalVariance += Math.abs(users[currentUser][(users[currentUser].handsPlayed[i])][j] - oddsArray[currentHandString][numOpponents - 1]);
-    };
-    var currentHandVariance = totalVariance / users[currentUser][(users[currentUser].handsPlayed[i])].length;
+
+    _.each(users[currentUser][hand], function(prediction) {
+      totalVariance += Math.abs(prediction - oddsArray[currentHandString][numOpponents - 1]);
+    });
+
+    var currentHandVariance = totalVariance / users[currentUser][hand].length;
     if (lowerLimit <= currentHandVariance && currentHandVariance <= upperLimit) {
-      output += users[currentUser].handsPlayed[i] + ' : ' + currentHandVariance + "<br><br>";
+      output += hand + ' : ' + currentHandVariance + "<br><br>";
     };
-  };
+  });
   return output;
 };
 
@@ -436,11 +436,13 @@ function contains(a, obj) {
 showCurrentUserObject()
       creates a local variable "output"
       adds each property of the current user object to output
+        (using a "for in loop" just for application consideration, I think _.each() may have just murdered all of my future for loops ha)
       displays output
 */
 
 function showCurrentUserObject() {
   var output = '';
+
   for (var property in users[currentUser]) {
     output += property + ': ' + users[currentUser][property]+'; ';
   };
