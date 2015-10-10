@@ -37,8 +37,6 @@ randomFunnyImage()
       else set previousFunnyImage to equal the new randImage value and use this number to display a random funny image with
         an img src tag in the 'funny-image' div
           (the image names are 0 through 10 .jpg)
-
-
 */
 
 function showUserContent() {
