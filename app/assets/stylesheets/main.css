@@ -238,16 +238,6 @@ html, body {
 	float: right;
 }
 
-#best-hand {
-	text-align: right;
-	padding-right: 12%;
-}
-
-#worst-hand {
-	text-align: right;
-	padding-right: 12%;
-}
-
 #all-hand-variance-ranges-third {
 	width: 26%;
 	float: left;

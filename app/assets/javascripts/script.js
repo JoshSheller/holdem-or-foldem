@@ -513,6 +513,8 @@ function showCurrentUserObject() {
       round results (ie 4.3333333333333)
 
       use switches or something instead of stacking if then's?
+
+      replace repetitive "users[currentUser]" with a global variable reference?
 */
 
 var oddsArray =
