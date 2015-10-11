@@ -12,11 +12,12 @@
 
 	<body onload="randomFunnyImage()">
 
-
+<!-- only used in dev
+	 @JAS REMOVE BEFORE FINAL
 		<button type="button" onclick="showUserContent()">Show User</button>
 		<button type="button" onclick="showIndexContent()">Show Index</button>
 		<button onclick="showCurrentUserObject()">Show User Object</button>
-
+-->
 
 <!--
 												INDEX
@@ -178,7 +179,15 @@
 					</div>
 					<div id="all-hand-variances-third">
 						<button onclick="allHandVariances()">Show Hand Variances</button>
-						<div id="hand-variances"></div>
+						<div>
+							<div id="hand-variances"></div>
+							<div id="best-worst-hands">
+								<h2>Best Hand</h2>
+								<div id="best-hand"></div>
+								<h2>Worst Hand</h2>
+								<div id="worst-hand"></div>
+							</div>
+						</div>
 					</div>
 					<div id="all-hand-variance-ranges-third">
 						<button onclick="allHandVarianceRanges()">Show Hands in Variance Ranges</button>

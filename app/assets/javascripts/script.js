@@ -26,15 +26,17 @@ showUserContent()
       displays the userHome content by changing its display style to block
       hides the index content by changing its display style to none
       clears the hand-histories results content (in case the user has been changed or so the current user cannot "cheat")
+
 showIndexContent()
       displays the index content by changing its display style to block
       hides the userHome content by changing its display style to none
+
 randomFunnyImage()
       a local randImage variable is declared containing a random number between 0-9 (using _.random())
       if this random number is the same as the global variable 'previousFunnyImage', start randomFunnyImage() over
       else set previousFunnyImage to equal the new randImage value and use this number to display a random funny image with
         an img src tag in the 'funny-image' div
-          (the image names are 0 through 10 .jpg)
+          (the image names are 0 through 9 .jpg)
 */
 
 function showUserContent() {
@@ -73,6 +75,7 @@ newUser()
       the newUsername is converted to a string and stored in the global currentUser variable
       the user is alerted with a welcome message
       showUserContent() is utilized to "change the page" to userHome
+
 logIn()
       the user submitted username is stored in a local variable "username"
       the user submitted password is stored in a local variable "userPassword"
@@ -82,6 +85,7 @@ logIn()
       else if the submitted password does not match the password associated with the submitted username object the user is alerted
       else (username and password match) the submitted username is converted to a string and stored in the global currentUser object
       showUserContent() is utilized to "change the page" to userHome
+
 logOut()
       the global currentUser variable is set to null
       the "begin-play" div is reset to its original state
@@ -91,6 +95,7 @@ logOut()
 function newUser() {
   var newUsername = document.getElementById("new-username").value;
   var newPassword = document.getElementById("new-password").value;
+
   if (newUsername == '') {
     alert("Please add a username and re-submit!");
   } else if (users[newUsername.toString()] != undefined) {
@@ -113,6 +118,7 @@ function newUser() {
 function logIn() {
   var username = document.getElementById("username").value;
   var userPassword = document.getElementById("password").value;
+
   if (username == '') {
     alert("Please add your username and re-submit!");
   } else if (userPassword == '') {
@@ -142,9 +148,9 @@ function logOut() {
                                         SELECTING / DISPLAYING A RANDOM POKER HAND
 
 randCard()
-      utilizing the underscore "_.random" function, combines two values from the global (cards) and (suits) arrays to form a
-      string representing a specific card
-        one of 13 cards, one of four suits
+      utilizing the underscore "_.random()", combines two values from the global (cards) and (suits) arrays to form a
+        string representing a specific card
+          one of 13 cards, one of four suits
 
 setHandAndSuited() 
       creates a string to represent a hand with two face cards and an "o" or "u" representing offsuit or suited
@@ -206,9 +212,11 @@ function holeCards() {
 beginPlay() 
       utilizes holeCards() to set and display the user's hole cards
       it also adds a user input box for the user to put in their % prediction
+
 selectNumOpponents()
       stores the # of opponents selector box location in a local variable "selectBox"
       sets the global variable "numOpponents" to the user selected value of the above selectBox
+
 addToUserVariance()
       receives and stores user % prediction in a local variable currentPrediction
       if the user prediction is not a number the user is alerted to enter a valid prediction
@@ -227,19 +235,22 @@ function beginPlay() {
 
 function selectNumOpponents() {
   var selectBox = document.getElementById("numOpponentSelector");
+
   numOpponents = selectBox.options[selectBox.selectedIndex].value;
 };
 
 function addToUserVariance() {
   var currentPrediction = document.getElementById("current-prediction").value;
-  if (currentPrediction < 0 || currentPrediction > 100) {
+
+  if (currentPrediction == '') {
+    alert("You forgot to enter a prediction! :P");
+  } else if (currentPrediction < 0 || currentPrediction > 100) {
     alert("Your percent prediction is out of the possible range, please enter a number between 0 - 100");
   } else if (isNaN(currentPrediction)) {
     alert("This is not a valid number, please enter a number as your prediction :)");
   } else {
     document.getElementById('you-predicted').innerHTML = '<p>' + currentPrediction + '%</p>';
     document.getElementById('the-answer').innerHTML = '<p>' + oddsArray[hand][numOpponents - 1] + '%</p>';
-
     if (users[currentUser][hand + numOpponents] != undefined) {
       users[currentUser][hand + numOpponents].push(currentPrediction);
       document.getElementById('begin-play').innerHTML = '<button onclick="beginPlay()">Next Hand</button>';
@@ -256,43 +267,53 @@ function addToUserVariance() {
 
 handHistories()
       creates a local "output" variable
-      for each hand played by the user, the hand name followed by all previous user % submissions is added to the output variable
+      using _.each(), each hand played by the user, the hand name followed by all previous user % submissions is added to the output variable
       the output variable is displayed in the Analysis section of the userHome "page"
+
 singleHandVariance() --> (not in use)
       user submitted hand is stored in a local "hand" variable
       user submitted # opponents is stored in a local "numOpponents" variable
       a local totalVariance variable is declared
       a local handVariance variable is declared
-      for each entry by the user for the given hand & # opponents, the absolute value of the difference between their % prediction
-        and the actual % is added to totalVariance
+      using _.each(), the absolute value of the difference between the user % prediction and the actual % is added to totalVariance
+        for each entry by the user for the given hand & # opponents
       handVariance is set to equal the totalVariance divided by the number of entries for this hand
       handVariance is displayed in the Analysis section within the 'show-single-hand-variance' divs
+
 allHandVariances()
-      declares an empty local variable 'output'
-      for each hand played by the user, three local variables are declared (totalVariance/currentHandString/numOpponents)
+      declares two empty local variables 'output' / 'totalVarianceArray'
+      using _.each(), for each hand played by the user, two local variables are declared (currentHandString/numOpponents)
       if the card entry is 3 letters in length (a pocket pair without a suited or unsuited letter)
         store the first two letters (the card) in the currentHandString variable
         store the third letter (number of opponents) in the numOpponents variable
       else (the card is not a pocket pair and has four letters)
         store the first three letters (the card and suited or unsuited) in the currentHandString variable
         store the fourth letter (number of opponents) in the numOpponents variable
-      (nested) for each entry in the current hand, add the absolute value of the difference between the user entry
-        and the actual %
-      the totalVariance for current hand is divided by the number of user entries for said hand to give 
-        hand variance are added to 'output'
+      local variable 'totalVariance' was set to equal _.reduce(), adding the absolute value of the difference between
+        the user entry and the actual % for each entry in the current hand
+      the totalVariance for current hand is divided by the number of user entries for said hand to find individual
+        hand variance and added to 'output'
+      the current hand and its variance are added ".push()" to the totalVarianceArray
+      a local variable bestHand is declared to equal the hand/variance pair within totalVarianceArray that has
+        the smallest variance with _.min()
+      a local variable worstHand is declared to equal the hand/variance pair within totalVarianceArray that has
+        the biggest variance with _.max()
+      the bestHand and worstHand values are displayed in 'best-hand' / 'worst-hand' divs
       output is displayed in the 'hand-variances' div
-      
+
+
 handVarianceRange()
       an 'output' variable is declared with an <h2> of the given lowerLimit and upperLimit arguments as a range
-      for each hand played by the user, three local empty variables are declared (totalVariance/currentHandString/numOpponents)
+      using _.each(), for each hand played by the user, two empty local variables
+        are declared (currentHandString/numOpponents)
       if the card entry is 3 letters in length (a pocket pair without a suited or unsuited letter)
         store the first two letters (the card) in the currentHandString variable
         store the third letter (number of opponents) in the numOpponents variable
       else (the card is not a pocket pair and has four letters)
         store the first three letters (the card and suited or unsuited) in the currentHandString variable
         store the fourth letter (number of opponents) in the numOpponents variable
-      (nested) for each entry in the current hand, add the absolute value of the difference between the user entry
-        and the actual %
+      (nested) using _.reduce(), for each entry in the current hand, add the absolute value of the difference between the user entry
+        and the actual % and store in totalVariance
       the totalVariance for current hand is divided by the number of user entries for said hand and stored in currentHandVariance
       if the currentHandVariance value is between the given lowerLimit/upperLimit arguments the card name and currentHandVariance
         are added to 'output'
@@ -300,7 +321,7 @@ handVarianceRange()
 
 allHandVarianceRanges()
       an empty 'output' variable is declared
-      utlizes handVarianceRange() to add cards with variances within desired ranges to local 'output' variable
+      utlizes handVarianceRange() to add hands with variances within desired ranges to local 'output' variable
       displays 'output' in 'all-hand-variance-ranges' div
 */
 
@@ -328,10 +349,11 @@ function singleHandVariance() {
 
 function allHandVariances() {
   var output = '';
+  var totalVarianceArray = [];
 
   _.each(users[currentUser].handsPlayed, function(hand) {
     var currentHandString = '';
-    var numOpponents = 0;
+    var numOpponents = 1;
 
     if (hand.length == 3) {
       currentHandString = hand.charAt(0) + hand.charAt(1);
@@ -347,7 +369,17 @@ function allHandVariances() {
 
     output += hand + ' : ' + totalVariance / users[currentUser][hand].length + '<br><br>';
 
+    totalVarianceArray.push({ cards: hand, variance: totalVariance });
   });
+
+  document.getElementById('hand-variances').innerHTML = '<p>' + output + '</p>';
+
+  var bestHand = _.min(totalVarianceArray, function(hand) { return hand.variance; });
+  var worstHand = _.max(totalVarianceArray, function(hand) { return hand.variance; });
+
+  document.getElementById('best-hand').innerHTML = '<p>' + bestHand.cards + ' : ' + bestHand.variance + '</p>';
+  document.getElementById('worst-hand').innerHTML = '<p>' + worstHand.cards + ' : ' + worstHand.variance + '</p>';
+
   document.getElementById('hand-variances').innerHTML = '<p>' + output + '</p>';
 };
 
@@ -474,6 +506,13 @@ function showCurrentUserObject() {
 
       possibly divide hand variance ranges entirely so never a duplicate
         ex. an average 10% error on a hand with show up in 0-10 & 10-20
+
+      include types of hands in the model somewhere so that you can show users which "types" of hands they are best/worst at
+        ex. suited-gappers, suited-connectors, high-low, etc.
+
+      round results (ie 4.3333333333333)
+
+      use switches or something instead of stacking if then's?
 */
 
 var oddsArray =
