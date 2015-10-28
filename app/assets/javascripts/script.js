@@ -52,7 +52,7 @@ function showIndexContent() {
 };
 
 function randomFunnyImage() {
-  var randImage = _.random(0, 9);
+  var randImage = _.random(0, 8);
 
   if (randImage == previousFunnyImage) {
     randomFunnyImage();
