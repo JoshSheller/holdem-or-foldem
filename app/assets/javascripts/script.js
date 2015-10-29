@@ -1,3 +1,30 @@
+/*
+                                            NOTES
+
+Every time I start working on my "final edits" I think of eight more things I should do with it ha.
+
+It is pretty heavily commented --> will shorten up later, this is mostly for my own pre-interview review.
+I also pulled a lot of values from the html content instead of using arguments (looking into how to work around this in rails).
+
+The app tests the user on the winning % of a random poker hand.
+The user submissions are stored and the user can view their submission histories, individual hand variances (average % off they 
+have been per hand), or hands by variance range (hands organized by their average % error).
+
+The app will store multiple users and their hand histories, but only within a single session.
+If you refresh the page everything is wiped.
+Was looking into how to store these user objects on the server but it looked to me like it would be best if done
+through rails, meaning less javascript, and I didn't want to move away from JS until after my submission to HR.
+
+I plan to add an informational page to explain things more clearly as I have probably gotten too close to the
+project and can't see some of the unclear pieces from the user perspective.
+
+Enjoy and please send any suggestions for improvement to joshua.a.sheller@gmail.com!
+*/
+
+
+
+
+
 
 
 /*
